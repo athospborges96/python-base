@@ -1,25 +1,44 @@
-email_tmpl = """
-Olá, %(nome)s.
+#!/user/bin/env python3
+"""Imprime a mensagem de um e-mail
 
-Vi que seu perfil atende os requisitos para o upgrade de cartão.
+NÃO SERVE PRA MANDAR SPAM!!!😏
+"""
+__version__ = "0.1.1"
 
-Seu cartão atual é o %(cartao_basico)s.
+import sys
+import os
 
-A nossa oferta é o upgrade para o cartão %(cartao_novo)s
+arguments = sys.argv[1:]
+if not arguments:
+    print("informe o nome do arquivo de emails")
+    sys.exit(1)
+    
+filename =  arguments [0]
+templatename = arguments[1]
 
-Com ele, você terá os benefícios:  %(pontos).1f pontos  por dólar gasto, acesso a sala vip  %(sala_vip)i vezes por ano, seguro viagem, e muito mais.
+path = os.curdir
+filepath = os.path.join(path, filename)
+templatepath = os.path.join(path, templatename)
 
-E ainda te oferecemos anuidade grátis por %(anos)d anos.
 
-%(texto)s
+for line in open(filepath):
+    name, email = line.split(",")
 
-cique agora em %(link)s
-
-Oferta por tempo limitado a %(tempo)d horas.
- """
-
-clientes = ["Athos", "Luiza", "Roberto"]
-
-for cliente in clientes:
-        print(email_tmpl % {"nome": cliente, "cartao_basico": "platinum", "cartao_novo": "grafeno plus", "pontos": 4.5, "sala_vip": 20,
-        "anos": 2, "texto": "Esse é um produto exclusivo do nosso banco", "link": "https://bancodobostil.com", "tempo": 24})
+    # TODO:Substituir por enviar email de verdade
+    print(f"Enviando email para: {email}")
+    print()
+    print(
+        open(templatepath).read() 
+        % {
+            "nome": name, 
+            "cartao_basico": "platinum", 
+            "cartao_novo": "grafeno plus", 
+            "pontos": 4.5, 
+            "sala_vip": 20,
+            "anos": 2, 
+            "texto": "Esse é um produto exclusivo do nosso banco", 
+            "link": "https://bancodobostil.com", 
+            "tempo": 24,
+        }
+    )
+    print("-" * 50)
