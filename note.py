@@ -28,11 +28,6 @@ import sys
 cmds = ("read", "new")
 path = os.curdir
 filepath = os.path.join(path, "notas.txt")
-if not os.path.exists(filepath):
-    try:
-        os.mknod(os.path.join(path, "notas.txt"))
-    except OSError as e:
-        pass
         
 arguments = sys.argv[1:]
 if not arguments:
@@ -46,15 +41,18 @@ if arguments[0] not in cmds:
 
 if arguments[0] == "read":
     #Leitura das notas
+    if len(arguments) < 2:
+        print(open(filepath).read())
+        print("-" * 40)
+        print()
+        sys.exit()
     for line in open(filepath):
         titulo, tag, texto = line.split("\t")
         if tag.lower() == arguments[1].lower():
             print(f"titulo: {titulo}")
             print(f"texto: {texto}")
-            print("-" * 30)
+            print("-" * 40)
             print()
-        if not arguments:
-            print(open(filepath).read())
         
 if arguments[0] == "new":
     try:
