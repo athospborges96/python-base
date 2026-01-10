@@ -14,7 +14,13 @@ if not arguments:
     sys.exit(1)
     
 filename =  arguments [0]
-templatename = arguments[1]
+
+#TODO: melhorar isso aqui
+if(arguments) <2:
+    print("informe o arquivo de template")
+    sys.exit(1)
+
+templatename = arguments [1]
 
 path = os.curdir
 filepath = os.path.join(path, filename)
