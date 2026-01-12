@@ -30,10 +30,18 @@ import sys
 arguments = {"lang": None, "count": 1}
 
 for arg in sys.argv[1:]:
-    # TODO: Tratar ValueError
-    key, value = arg.split("=")
+    try:
+        key, value = arg.split("=")
+    except ValueError as e:
+        # TODO: logging
+        print (f"[Error] {str(e)}")
+        print(f"you need to use `=` on the argument instead: {arg[6:7]}")
+        sys.exit(1)
+        
     key = key.lstrip("-").strip()
     value = value.strip()
+
+    # Validação
     if key not in arguments:
         print(f"Invalid Option`{key}`")
         sys.exit()
@@ -58,6 +66,18 @@ msg = {
     "fr_FR": "Bonjour, Monde",
 }
 
+"""
+# try com valor default
+message = msg.get(current_language, msg["en_US"])
+"""
+
+try:
+    message = msg[current_language]
+except KeyError as e:
+    print(f"[Error] {str(e)}")
+    print(f"Invalid Language. Chose from:{list(msg.keys())}")
+    sys.exit(1)
+
 print(
-    msg[current_language] * int(arguments["count"])
+    message * int(arguments["count"])
 )
