@@ -32,7 +32,20 @@ __License__ = "Unlicensed"
 
 import os
 import sys
+import logging
 from datetime import datetime
+
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+log = logging.Logger("prefixcalc.py", log_level)
+ch = logging.StreamHandler()
+ch.setLevel(log_level)
+fmt = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - " \
+    "l:%(lineno)d - f:%(filename)s: %(message)s",
+    datefmt="%d/%m/%Y %H:%M:%S"
+)
+ch.setFormatter(fmt)
+log.addHandler(ch)
 
 arguments = sys.argv[1:]
 
@@ -70,7 +83,7 @@ for num in nums:
 try:
     n1, n2 = validated_nums
 except ValueError as e:
-    print(str(e))
+    log.error("Erro ao desempacotar os números: %s", str(e))
     sys.exit(1)
     
 # TODO: Usar dict de funcoes(será que eu tava no caminho certo?)
@@ -94,6 +107,5 @@ try:
     with open(filepath, "a") as file_:
         file_.write(f"{timestamp[:-7]} - {user} - {operation}, {n1}, {n2} = {result}\n")
 except PermissionError as e:
-    #TODO: logging
-    print(str(e))
+    log.error("Sem permissão para escrever o arquivo %s", str(e))
     sys.exit(1)

@@ -26,6 +26,19 @@ __license__ ="Unlicense"
 
 import os
 import sys
+import logging
+
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+log = logging.Logger("hello.py", log_level)
+ch = logging.StreamHandler()
+ch.setLevel(log_level)
+fmt = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - " \
+    "l:%(lineno)d - f:%(filename)s: %(message)s",
+    datefmt="%d/%m/%Y %H:%M:%S"
+)
+ch.setFormatter(fmt)
+log.addHandler(ch)
 
 arguments = {"lang": None, "count": 1}
 
@@ -33,9 +46,12 @@ for arg in sys.argv[1:]:
     try:
         key, value = arg.split("=")
     except ValueError as e:
-        # TODO: logging
-        print (f"[Error] {str(e)}")
-        print(f"you need to use `=` on the argument instead: {arg[6:7]}")
+        log.error(
+            "you need to use `=` on the argument instead (%s), try " \
+            "--key=value: %s",
+            arg[6:7],
+            str(e)
+        )
         sys.exit(1)
         
     key = key.lstrip("-").strip()
@@ -74,8 +90,8 @@ message = msg.get(current_language, msg["en_US"])
 try:
     message = msg[current_language]
 except KeyError as e:
-    print(f"[Error] {str(e)}")
-    print(f"Invalid Language. Chose from:{list(msg.keys())}")
+    log.error("Invalid Language: %s", str(e))
+    print(f"Chose from:{list(msg.keys())}")
     sys.exit(1)
 
 print(

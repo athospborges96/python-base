@@ -1,0 +1,2 @@
+15/01/2026 18:50:40 - arquivo.py - CRITICAL - l:29 - f:errors.py: Arquivo de nomes não encontrado: [Errno 2] No such file or directory: 'names.txt'
+15/01/2026 18:52:20 - arquivo.py - CRITICAL - l:29 - f:errors.py: Arquivo de nomes não encontrado: [Errno 2] No such file or directory: 'names.txt'
