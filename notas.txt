@@ -1,2 +1,2 @@
-Asdasda	asdadad	asdasdada
-Testenovo	legal, funciona	vamos que vamos
+Tô Aprendendo Python	Python	Vou aplicar python em tudo na minha vida!
+Utilizando While Para Repetição	python	Utilizar while é algo muito prático e utilizavel. Nesse programa eu utilizo um main While loop para gravar várias notas em sequência se for minha intenção.

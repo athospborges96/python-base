@@ -1,0 +1,8 @@
+title: Meu post
+tags: tech, general
+date: 19-01-2026
+published: 1
+---
+Este é o texto do meu post
+Aqui está a explicação do porque os ET's
+bla bla bla bla

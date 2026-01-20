@@ -39,32 +39,36 @@ if not arguments:
 if arguments[0] not in cmds:
     print("invalid command {arguments[0]}")
 
-if arguments[0] == "read":
-    #Leitura das notas
-    if len(arguments) < 2:
-        print(open(filepath).read())
-        print("-" * 40)
-        print()
-        sys.exit()
-    for line in open(filepath):
-        titulo, tag, texto = line.split("\t")
-        if tag.lower() == arguments[1].lower():
-            print(f"titulo: {titulo}")
-            print(f"texto: {texto}")
+while True:
+
+# Leitura de notas
+    if arguments[0] == "read":
+        if len(arguments) < 2:
+            print(open(filepath).read())
             print("-" * 40)
             print()
+            sys.exit()
+        for line in open(filepath):
+            titulo, tag, texto = line.split("\t")
+            if tag.lower() == arguments[1].lower():
+                print(f"titulo: {titulo}")
+                print(f"texto: {texto}")
+                print("-" * 40)
+                print()
+    if arguments[0] == "new":
+        try:
+            titulo = arguments[1]
+        except IndexError:
+            titulo = input("Qual é o titulo:").strip().title()
         
-if arguments[0] == "new":
-    try:
-        titulo = arguments[1]
-    except IndexError:
-        titulo = input("Qual é o titulo:").strip().title()
-        
-    text = [
-        f"{titulo}",
-        input("tag:").strip(),
-        input("text:\n").strip(),
-    ]
+        text = [
+            f"{titulo}",
+            input("tag:").strip(),
+            input("text:\n").strip(),
+        ]
     
-    with open(filepath, "a") as file_:
-        file_.write("\t".join(text) + "\n")
+        with open(filepath, "a") as file_:
+            file_.write("\t".join(text) + "\n")
+    cont = input("Quer continuar {arguments[0]} notas? [N/y]: ").strip().lower()
+    if cont != "y":
+        break
