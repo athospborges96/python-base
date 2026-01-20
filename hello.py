@@ -19,14 +19,24 @@ Execute:
     python3 hello.py
     or
     ./hello.py
+
+If the language is not in the local dictionary and googletrans is installed,
+the script translates the English message automatically.
+
+To install googletrans: pip install googletrans==4.0.0-rc1
 """
-__version__ ="0.1.3"
+__version__ ="0.1.4"
 __author__ ="Athos Matheus"
 __license__ ="Unlicense"
 
 import os
 import sys
 import logging
+import importlib.util
+
+GOOGLETRANS_AVAILABLE = importlib.util.find_spec("googletrans") is not None
+if GOOGLETRANS_AVAILABLE:
+    from googletrans import Translator
 
 log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
 log = logging.Logger("hello.py", log_level)
@@ -65,7 +75,6 @@ for arg in sys.argv[1:]:
 
 current_language = arguments["lang"]
 if current_language is None:
-    #TODO: Usar repetição
     if "LANG" in os.environ:
         current_language = os.getenv("LANG")
     else:
@@ -79,7 +88,7 @@ msg = {
     "pt_BR": "Olá, Mundo!",
     "it_IT": "Ciao, Mondo!",
     "es_ES": "Hola, Mundo!",
-    "fr_FR": "Bonjour, Monde",
+    "fr_FR": "Bonjour, le monde!",
 }
 
 """
@@ -90,9 +99,17 @@ message = msg.get(current_language, msg["en_US"])
 try:
     message = msg[current_language]
 except KeyError as e:
-    log.error("Invalid Language: %s", str(e))
-    print(f"Chose from:{list(msg.keys())}")
-    sys.exit(1)
+    if not GOOGLETRANS_AVAILABLE:
+        log.error("Invalid Language: %s", str(e))
+        print(f"Chose from:{list(msg.keys())}")
+        sys.exit(1)
+    translator = Translator()
+    target_language = current_language.split("_")[0]
+    message = translator.translate(
+        msg["en_US"],
+        dest=target_language
+    ).text
+
 
 print(
     message * int(arguments["count"])
