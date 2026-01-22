@@ -5,7 +5,7 @@ import logging
 from logging import handlers
 
 log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
-log = logging.Logger("arquivo.py", log_level)
+log = logging.Logger("errors.py", log_level)
 fh = handlers.RotatingFileHandler(
     "errors.log",
     maxBytes=10**6,

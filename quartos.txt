@@ -1,0 +1,5 @@
+#codigo, nome, preço, disponiveis
+1, Suíte Master, 500, 2
+2, Quarto Família, 350, 10
+3, Quarto single, 250, 10
+4, Quarto simples, 150, 10
