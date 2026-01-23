@@ -61,14 +61,14 @@ else:
 arguments = [temp, umidade]
 
 if temp >= 45:
-    print("Alerta! Temperatura extremamente alta!")
+    print("Alerta! Temperatura extremamente alta!🥵")
     print("\a")
-elif temp*3 >= umidade:
-    print("Alerta! Condições de calor úmido!")
+elif temp*3 >= umidade and temp != 0:
+    print("Alerta! Condições de calor úmido!😶‍🌫️")
     print("\a")
 elif temp >= 33 and temp < 45:
-    print("Atenção! Temperatura alta!")
-    print("Beba agua e use protetor solar")
+    print("Atenção! Temperatura alta!😥")
+    print("Beba agua e use protetor solar😎")
     if umidade >60:
         print("umidade do ar ok")
     else:
@@ -86,7 +86,7 @@ elif temp >= 10 and temp < 20:
     else:
         print("umidade abaixo do nivel ideal")
 elif temp < 10:
-    print("Alerta! Temperatura extremamente baixa!")
+    print("Alerta! Temperatura extremamente baixa!🥶")
     print("\a")
     if umidade >60:
         print("umidade do ar ok")
